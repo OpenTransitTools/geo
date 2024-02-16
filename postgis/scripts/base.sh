@@ -1,16 +1,7 @@
-mac_psql=/Applications/Postgres.app/Contents/Versions/9.4/bin/psql
-unix_psql=`which psql`
-
-if [ -f "$mac_psql" ]
-then
-    psql=$mac_psql
-elif [ -f "$unix_psql" ]
-then
-    psql=$unix_psql
-fi
-
 db_url=$1
 def_db=${2:-postgres}
+#psql=docker exec -u postgres -it db psql -U postgres
+psql="docker exec -u $def_db -it db psql -U $def_db"
 
 # IMPORTANT: there are are python configs for user, pass and db in loader/config/app.ini, which also need to change
 user=ott
