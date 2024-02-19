@@ -1,7 +1,9 @@
 DIR=`dirname $0`
 . $DIR/base.sh
 
-cd $DIR/../../ott/loader/gtfsdb/cache
+TAR_DIR=~/gtfsdb/cache/
+
+cd $TAR_DIR
 echo $PWD
 ls *.tar*
 
