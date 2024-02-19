@@ -1,7 +1,10 @@
+TAR_DIR=~/gtfsdb/cache/
+
 db_url=$1
 def_db=${2:-postgres}
-#psql=docker exec -u postgres -it db psql -U postgres
-psql="docker exec -u $def_db -it db psql -U $def_db"
+
+psql="docker exec -u $def_db -it db psql"
+pg_restore="docker exec -i -u $def_db db pg_restore"
 
 # IMPORTANT: there are are python configs for user, pass and db in loader/config/app.ini, which also need to change
 user=ott

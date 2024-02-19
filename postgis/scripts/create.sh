@@ -11,5 +11,5 @@ $psql -c "CREATE USER ${user} WITH PASSWORD '${pass}';"
 for d in $db $osm_db
 do
   $psql -c "CREATE DATABASE ${d} WITH OWNER ${user};"
-  $psql -c "CREATE EXTENSION postgis;"
+  $psql $d -c "CREATE EXTENSION postgis;"
 done

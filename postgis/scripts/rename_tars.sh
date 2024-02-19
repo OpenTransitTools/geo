@@ -1,9 +1,17 @@
 DIR=`dirname $0`
 . $DIR/base.sh
 
-TAR_DIR=~/gtfsdb/cache/
+cd $TAR_DIR
 for x in *-did_scp
 do
-  echo $x 
-  mv $x ${x%%-did_scp}
+  cmd="mv $x ${x%%-did_scp}"
+  echo $cmd
+  eval $cmd
+done
+
+for x in *-processed
+do
+  cmd="mv $x ${x%%-processed}"
+  echo $cmd
+  eval $cmd
 done
