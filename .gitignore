@@ -1,5 +1,9 @@
 *~
 *#
+x
+y
+z
 *.out
 *.txt
 **/geoserver-data
+**/data_dir
