@@ -7,3 +7,4 @@ z
 *.txt
 **/geoserver-data
 **/data_dir
+bin
