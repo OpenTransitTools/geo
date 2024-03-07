@@ -21,7 +21,7 @@ do
 
   sleep 1
 
-  dump="$pg_dump -n ${name} $db -F t > ${FEEDS_DIR}/${name}.tar"
+  dump="$pg_dump $db -n ${name} > ${FEEDS_DIR}/${name}.sql"
   echo $dump
   eval $dump
   
