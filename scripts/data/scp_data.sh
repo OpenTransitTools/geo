@@ -8,7 +8,7 @@ unset MACHINES
 . $DIR/get_machines.sh
 
 data_dir="~/rtp/map_server/data_dir"
-db_snaps=`ls ~/gtfs/cache/*.tar`
+db_snaps=`ls ~/gtfs/cache/*.sql`
 
 for m in $MACHINES
 do
