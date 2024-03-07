@@ -21,7 +21,7 @@ do
 
   sleep 1
 
-  dump="$pg_dump -n ${name} $db -F t > ${FEEDS_DIR}/${name}.jar"
+  dump="$pg_dump -n ${name} $db -F t > ${FEEDS_DIR}/${name}.tar"
   echo $dump
   eval $dump
   
