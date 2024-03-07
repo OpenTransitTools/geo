@@ -1,4 +1,10 @@
-TAR_DIR=~/gtfsdb/cache/
+if [ -d ~/gtfsdb/cache ]; then
+  TAR_DIR=~/gtfsdb/cache
+elif [ -d ~/gtfsdb ]; then
+  TAR_DIR=~/gtfsdb
+else
+  TAR_DIR=~/gtfs
+fi
 
 db_url=$1
 def_db=${2:-postgres}
