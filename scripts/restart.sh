@@ -1,11 +1,20 @@
+date
+rm -f ~/geo/*/nohup.out
+
 cd ~/geo/geoserver
-docker-compose down
+docker-compose down; sleep 2
 
 cd ~/geo/postgis
-docker-compose down
+docker-compose down; sleep 5
 
+
+docker network prune -f
+
+
+echo $PWD
+nohup docker-compose up &
 sleep 2
-docker-compose up
 
 cd ~/geo/geoserver
-docker-compose up
+echo $PWD
+nohup docker-compose up &
