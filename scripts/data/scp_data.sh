@@ -8,9 +8,9 @@ unset MACHINES
 . $DIR/get_machines.sh
 
 data_dir="~/rtp/map_server/data_dir"
-db_snaps=`ls ~/gtfs/cache/*.sql`
+db_snaps="~/gtfs/cache/*.sql"
 
-for m in $MACHINES
+for m in $UPDATE
 do
   cmd="ssh ${m} 'rm -rf ~/tmp/gtfs; cp -r ~/gtfs /tmp/; rm -rf ~/gtfs; mkdir ~/gtfs'"
   echo $cmd
@@ -20,10 +20,9 @@ do
   echo $cmd
   eval $cmd
 
-  for d in $db_snaps
-  do
-    cmd="scp $d ${m}:~/gtfs/"
-    echo $cmd
-    eval $cmd
-  done
+  cmd="scp $db_snaps ${m}:~/gtfs/"
+  echo $cmd
+  eval $cmd
+
+  sleep 1
 done
