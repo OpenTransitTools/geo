@@ -1,7 +1,7 @@
 DIR=`dirname $0`
 . $DIR/../base.sh
 
-cd $TAR_DIR
+cd $GTFS_DIR
 for x in *-did_scp
 do
   cmd="mv $x ${x%%-did_scp}"

@@ -1,9 +1,9 @@
 if [ -d ~/gtfsdb/cache ]; then
-  TAR_DIR=~/gtfsdb/cache
+  GTFS_DIR=~/gtfsdb/cache
 elif [ -d ~/gtfsdb ]; then
-  TAR_DIR=~/gtfsdb
+  GTFS_DIR=~/gtfsdb
 else
-  TAR_DIR=~/gtfs
+  GTFS_DIR=~/gtfs
 fi
 
 db_url=$1

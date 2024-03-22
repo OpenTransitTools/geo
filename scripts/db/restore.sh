@@ -1,7 +1,7 @@
 DIR=`dirname $0`
 . $DIR/../base.sh
 
-cd $TAR_DIR
+cd $GTFS_DIR
 echo $PWD
 
 for x in ls *.sql
