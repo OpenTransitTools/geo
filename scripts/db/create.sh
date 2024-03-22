@@ -2,7 +2,7 @@
 ## crete OTT spatial db for OTT
 ##
 DIR=`dirname $0`
-. $DIR/base.sh
+. $DIR/../base.sh
 
 ## create user (default is user='ott' with pass='ott' -- change in ./base.sh)
 $psql -c "CREATE USER ${user} WITH PASSWORD '${pass}';"

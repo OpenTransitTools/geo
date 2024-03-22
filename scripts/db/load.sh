@@ -2,7 +2,7 @@
 ## crete OTT spatial db for OTT
 ##
 DIR=`dirname $0`
-. $DIR/base.sh
+. $DIR/../base.sh
 
 # put loader's bin dir here
 ln -s ~/rtp/loader/bin . > /dev/null 2>&1

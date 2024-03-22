@@ -1,5 +1,5 @@
 DIR=`dirname $0`
-. $DIR/base.sh
+. $DIR/../base.sh
 
 cd $TAR_DIR
 echo $PWD
