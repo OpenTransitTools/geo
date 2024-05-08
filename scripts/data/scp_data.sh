@@ -9,6 +9,7 @@ unset MACHINES
 
 data_dir="~/rtp/map_server/data_dir"
 db_snaps="~/gtfs/cache/*.sql"
+db_view="~/geo/gs_sql_view.txt"
 
 for m in $UPDATE
 do
@@ -21,6 +22,10 @@ do
   eval $cmd
 
   cmd="scp $db_snaps ${m}:~/gtfs/"
+  echo $cmd
+  eval $cmd
+
+  cmd="scp $db_view ${m}:~/geo/"
   echo $cmd
   eval $cmd
 

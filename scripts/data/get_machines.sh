@@ -10,4 +10,4 @@ unset UPDATE
 
 bolt command run "~/scripts/blue-green_toggle status geoserver" --target $LOAD_BALANCER > $TMP
 cat $TMP
-#export UPDATE=${1-"$BLUE_STAG"}
+export UPDATE=${1-"$BLUE_STAG"}
