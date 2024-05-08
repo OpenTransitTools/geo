@@ -17,3 +17,6 @@ do
 
   echo
 done
+
+
+$DIR/psql.sh -d $db -U $user -f $db_view
