@@ -8,3 +8,4 @@ z
 **/geoserver-data
 **/data_dir
 bin
+update.sh

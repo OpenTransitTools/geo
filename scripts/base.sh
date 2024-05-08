@@ -1,4 +1,6 @@
-if [ -d ~/gtfsdb/cache ]; then
+if [ -d ~/gtfs/cache ]; then
+  GTFS_DIR=~/gtfs/cache
+elif [ -d ~/gtfsdb/cache ]; then
   GTFS_DIR=~/gtfsdb/cache
 elif [ -d ~/gtfsdb ]; then
   GTFS_DIR=~/gtfsdb
