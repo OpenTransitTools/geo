@@ -12,9 +12,9 @@ db_url=$1
 def_db=${2:-"postgres"}
 
 docker_exe="docker exec -i -u $def_db"
-psql="$docker_exe -it db psql"
+psql=${psql:-"$docker_exe -it db psql"}
 pg_restore="$docker_exe db psql"
-pg_dump="$docker_exe db pg_dump"
+pg_dump=${psql:-"$docker_exe db pg_dump"}
 
 
 # IMPORTANT: there are are python configs for user, pass and db in loader/config/app.ini, which also need to change
