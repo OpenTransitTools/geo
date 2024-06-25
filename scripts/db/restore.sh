@@ -19,4 +19,6 @@ do
 done
 
 
-echo "$DIR/file.sh -d $db -U $user -f $db_view"
+cmd="$DIR/file.sh $db_view"
+echo $cmd
+eval $cmd
