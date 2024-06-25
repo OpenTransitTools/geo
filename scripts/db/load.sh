@@ -13,8 +13,8 @@ do
   # rename '../AGENCY_NAME.gtfs.zip' to 'agency_name' 
   name=${f#$FEEDS_DIR/}
   name=${name%.gtfs.zip}
-  name=${name,,}
-
+  name=$(echo "$name" | awk '{print tolower($1)}')
+  
   cmd="bin/gtfsdb-load -c -ct -g -d $otp_url -s ${name} ${f}"
   echo $cmd
   eval $cmd
