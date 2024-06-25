@@ -13,8 +13,8 @@ def_db=${2:-"postgres"}
 
 docker_exe="docker exec -i -u $def_db"
 psql=${psql:-"$docker_exe -it db psql"}
-pg_restore="$docker_exe db psql"
-pg_dump=${psql:-"$docker_exe db pg_dump"}
+pg_restore=${pg_restore:-"$docker_exe db psql"}
+pg_dump=${pg_dump:-"$docker_exe db pg_dump"}
 
 
 # IMPORTANT: there are are python configs for user, pass and db in loader/config/app.ini, which also need to change
@@ -30,3 +30,14 @@ db_view="~/geo/gs_sql_view.txt"
 if  [[ "$db_url" != "" ]] && [[ "$db_url" != *"://"* ]]; then
     db_url=postgres://docker:docker@localhost:5432/
 fi
+
+
+function feed_name_from_zip() {
+  # get lowercase feed name from gtfs .zip file name
+  # ala '../FEED_NAME.gtfs.zip' -> 'feed_name' 
+  name=${1#$FEEDS_DIR/}
+  name=${name%.gtfs.zip}
+  name=$(echo "$name" | awk '{print tolower($1)}')
+  echo $name
+}
+
