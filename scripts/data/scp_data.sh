@@ -4,12 +4,15 @@
 DIR=`dirname $0`
 . $DIR/../base.sh
 
-unset MACHINES
-. $DIR/get_machines.sh
-
 data_dir="~/rtp/map_server/data_dir"
 db_snaps="~/gtfs/cache/*.sql"
 
+UPDATE=${1:-"GET_MACH"}
+
+if [ $UPDATE == "GET_MACH" ]; then
+  unset MACHINES
+  . $DIR/get_machines.sh
+fi
 
 for m in $UPDATE
 do
