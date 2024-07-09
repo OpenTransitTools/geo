@@ -7,9 +7,9 @@ DIR=`dirname $0`
 data_dir="~/rtp/map_server/data_dir"
 db_snaps="~/gtfs/cache/*.sql"
 
-UPDATE=${1:-"GET_MACH"}
+UPDATE=${*:-""}
 
-if [ $UPDATE == "GET_MACH" ]; then
+if [ $# == 0 ]; then
   unset MACHINES
   . $DIR/get_machines.sh
 fi
@@ -22,9 +22,12 @@ do
   eval $cmd
 
   # TODO - stop geoserver
+  cmd="ssh ${m} 'rm -rf ~/tmp/geoserver ~/geo/geoserver/geoserver; cp -r ~/geo/geoserver/data_dir /tmp'"
+  echo $cmd
+  eval $cmd
 
   # copy geoserver data_dir over 
-  cmd="scp -r $data_dir ${m}:${PWD}/geoserver/"
+  cmd="scp -r $data_dir ${m}:~/geo/geoserver/"
   echo $cmd
   eval $cmd
 
