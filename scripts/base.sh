@@ -2,10 +2,10 @@ if [ -d ~/gtfs/cache ]; then
   GTFS_DIR=~/gtfs/cache
 elif [ -d ~/gtfsdb/cache ]; then
   GTFS_DIR=~/gtfsdb/cache
-elif [ -d ~/gtfsdb ]; then
-  GTFS_DIR=~/gtfsdb
-else
+elif [ -d ~/gtfs ]; then
   GTFS_DIR=~/gtfs
+else
+  GTFS_DIR=~/gtfsdb
 fi
 
 db_url=$1
