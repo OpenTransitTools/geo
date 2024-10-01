@@ -4,8 +4,8 @@
 DIR=`dirname $0`
 . $DIR/../base.sh
 
-data_dir="~/rtp/map_server/data_dir"
-db_snaps="~/gtfs/cache/*.sql"
+data_dir="$GTFS_DIR/data_dir"
+db_snaps="$GTFS_DIR/*.sql"
 
 UPDATE=${*:-""}
 

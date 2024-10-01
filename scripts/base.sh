@@ -40,4 +40,3 @@ function feed_name_from_zip() {
   name=$(echo "$name" | awk '{print tolower($1)}')
   echo $name
 }
-
