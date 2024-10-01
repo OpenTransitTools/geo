@@ -35,7 +35,7 @@ fi
 function feed_name_from_zip() {
   # get lowercase feed name from gtfs .zip file name
   # ala '../FEED_NAME.gtfs.zip' -> 'feed_name' 
-  name=${1#$FEEDS_DIR/}
+  name=${1#$GTFS_DIR/}
   name=${name%.gtfs.zip}
   name=$(echo "$name" | awk '{print tolower($1)}')
   echo $name
