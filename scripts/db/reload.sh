@@ -17,15 +17,17 @@ if [ -d ~/gtfs/data_dir ]; then
 fi
 
 # load the db with new shp data
-cd ~/geo/
-$DIR/drop.sh
-sleep 1
-$DIR/create.sh
-sleep 1
-$DIR/load.sh
-sleep 4
-$DIR/file.sh gs_sql_view.txt
-cd -
+if [ -f ~/gtfs/trimet.sql ]; then
+  cd ~/geo/
+  $DIR/drop.sh
+  sleep 1
+  $DIR/create.sh
+  sleep 1
+  $DIR/load.sh
+  sleep 4
+  $DIR/file.sh gs_sql_view.txt
+  cd -
+fi
 
 # bring geoserver back up
 cd ~/geo/geoserver
