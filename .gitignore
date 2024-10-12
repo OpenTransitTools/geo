@@ -4,6 +4,7 @@ x
 y
 z
 *.out
+*.log
 *.txt
 **/geoserver-data
 **/data_dir
