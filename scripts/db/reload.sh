@@ -7,7 +7,9 @@ DIR=`dirname $0`
 # take geoserver down
 cd ~/geo/geoserver
 docker-compose down
-sleep 5
+sleep 1
+pkill -9 tmux
+sleep 2
 cd -
 
 # move clean data_dir into place
@@ -31,5 +33,7 @@ fi
 
 # bring geoserver back up
 cd ~/geo/geoserver
-nohup docker-compose up &
+GSLOG=gs.log
+rm -f $GSLOG
+tmux new-session -d -s geoserver_ses "docker-compose up > $GSLOG 2>&1"
 cd -
