@@ -8,6 +8,11 @@ else
   GTFS_DIR=~/gtfsdb
 fi
 
+GDIR=~/geo
+PG_DIR=$GDIR/postgis
+GEO_DIR=$GDIR/geoserver
+GEO_LOG=$GDIR/gs.log
+
 db_url=$1
 def_db=${2:-"postgres"}
 

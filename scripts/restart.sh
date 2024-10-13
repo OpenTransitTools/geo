@@ -1,19 +1,27 @@
+##
+## restart geoserver and postgis
+##
+DIR=`dirname $0`
+. $DIR/base.sh
+
 date
-rm -f ~/geo/*/nohup.out
 
-cd ~/geo/geoserver
+# shutdown geoserver
+cd $GEO_DIR
 docker-compose down -v; sleep 2
+cd -
 
-cd ~/geo/postgis
+# re-start postgis
+cd $PG_DIR
 docker-compose down -v; sleep 5
-
 docker network prune -f; sleep 2
-
-
-echo $PWD
-nohup docker-compose up &
+rm -f $GEO_LOG
+tmux new-session -d -s postgres_ses "docker-compose up > $GEO_LOG 2>&1"
 sleep 2
+cd -
 
-cd ~/geo/geoserver
-echo $PWD
-nohup docker-compose up &
+# startup geoserver
+cd $GEO_DIR
+tmux new-session -d -s geoserver_ses "docker-compose up > $GEO_LOG 2>&1"
+sleep 2
+cd -
