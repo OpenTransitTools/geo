@@ -2,7 +2,7 @@ DIR=`dirname $0`
 . $DIR/../base.sh
 
 cd $GTFS_DIR
-echo $PWD
+echo "LOADING db with files in $PWD"
 
 for x in ls *.sql
 do
@@ -22,3 +22,5 @@ done
 cmd="$DIR/file.sh $db_view"
 echo $cmd
 eval $cmd
+
+cd -

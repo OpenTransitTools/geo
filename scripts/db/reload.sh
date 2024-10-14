@@ -24,10 +24,8 @@ if [ -f $GTFS_DIR/trimet.sql ]; then
   sleep 1
   $DIR/create.sh
   sleep 1
-  $DIR/load.sh
+  $DIR/restore.sh
   sleep 2
-  $DIR/file.sh $GTFS_DIR/gs_sql_view.txt
-  sleep 1
 fi
 
 # bring geoserver back up
