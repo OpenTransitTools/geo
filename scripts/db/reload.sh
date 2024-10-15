@@ -19,7 +19,7 @@ if [ -f $load_test ]; then
   # move clean data_dir into place
   if [ -d $GTFS_DIR/data_dir ]; then
     rm -rf $GEO_DIR/data_dir
-    mv $GTFS_DIR/data_dir $GEO_DIR/
+    cp -r $GTFS_DIR/data_dir $GEO_DIR/
   fi
 
   # load the db with new shp data
