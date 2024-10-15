@@ -17,7 +17,8 @@ db_url=$1
 def_db=${2:-"postgres"}
 
 docker_exe="docker exec -i -u $def_db"
-psql=${psql:-"$docker_exe -it db psql"}
+psql=${psql:-"$docker_exe db psql"}
+psql_term=${psql:-"$docker_exe -it db psql"}
 pg_restore=${pg_restore:-"$docker_exe db psql"}
 pg_dump=${pg_dump:-"$docker_exe db pg_dump"}
 

@@ -3,4 +3,4 @@
 ##
 DIR=`dirname $0`
 . $DIR/../base.sh
-$psql ott
+$psql_term ott
