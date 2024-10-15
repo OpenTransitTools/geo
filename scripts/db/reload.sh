@@ -4,7 +4,10 @@
 DIR=`dirname $0`
 . $DIR/../base.sh
 
-if [ -f $GTFS_DIR/trimet.sql ]; then
+load_script=${1:-"$DIR/restore.sh"}
+load_test=${2:-"$GTFS_DIR/trimet.sql"}
+
+if [ -f $load_test ]; then
   # take geoserver down
   cd $GEO_DIR
   docker-compose down
@@ -24,7 +27,7 @@ if [ -f $GTFS_DIR/trimet.sql ]; then
   sleep 1
   $DIR/create.sh
   sleep 1
-  $DIR/restore.sh
+  $load_script
   sleep 2
 
 
