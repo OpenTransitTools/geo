@@ -5,7 +5,9 @@ DIR=`dirname $0`
 . $DIR/../base.sh
 
 ## create user (default is user='ott' with pass='ott' -- change in ./base.sh)
-$psql -c "CREATE USER ${user} WITH PASSWORD '${pass}';"
+cmd="$psql -c \"CREATE USER ${user} WITH PASSWORD '${pass}';\""
+echo $cmd
+eval $cmd
 
 # create ott DB (and formally osm $osm_db)
 for d in $db 
