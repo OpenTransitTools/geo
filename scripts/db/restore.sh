@@ -18,9 +18,17 @@ do
   echo
 done
 
+for x in ls *.views
+do
+  echo restore view: $x
+  r="$DIR/file.sh $x"
+  echo $r
+  eval $r
 
-cmd="$DIR/file.sh $db_view"
-echo $cmd
-eval $cmd
+  m="mv $x $x-processed"
+  echo $m
+  eval $m
 
+  echo
+done
 cd -

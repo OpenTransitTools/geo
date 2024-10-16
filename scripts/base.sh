@@ -29,7 +29,6 @@ pass=ott
 db=ott
 osm_db=osm
 otp_url=postgresql://$user:$pass@127.0.0.1:5432/$db
-db_view="$GTFS_DIR/gs_sql_view.sql"
 
 
 # use URL if we get content on the cmd line (default to docker url when no ://)
