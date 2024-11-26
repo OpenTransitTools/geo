@@ -2,11 +2,11 @@ version: '3.8'
 
 services:
    db:
-      image: kartoza/postgis:${POSTGIS_VERSION_TAG}
+      image: kartoza/postgis:${POSTGRES_MAJOR_VERSION}-${POSTGIS_MAJOR_VERSION}.${POSTGIS_MINOR_RELEASE}
       hostname: db
       container_name: db
       volumes:
-        - ${PWD}/data:/var/lib/postgresql
+        - $HOME/pg_data:/var/lib/postgresql
       ports:
         - ${POSTGRES_PORT}:5432
       environment:
@@ -15,8 +15,11 @@ services:
         - POSTGRES_PASS=${POSTGRES_PASS}
         - POSTGRES_UID=${POSTGRES_UID}
         - POSTGRES_GID=${POSTGRES_GID}
-        - ALLOW_IP_RANGE=all
-        - FORCE_SSL=FALSE
+        - UID=${POSTGRES_UID}
+        - GID=${POSTGRES_GID}
+        - ALLOW_IP_RANGE=${ALLOW_IP_RANGE}
+        - FORCE_SSL=${FORCE_SSL}
+        - POSTGRES_MULTIPLE_EXTENSIONS=postgis
       restart: on-failure
       healthcheck:
         test: "PGPASSWORD=${POSTGRES_PASS} pg_isready -h 127.0.0.1 -U ${POSTGRES_USER} -d ${POSTGRES_DB}"
