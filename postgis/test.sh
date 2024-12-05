@@ -20,9 +20,12 @@ if [[ $C == S* ]]; then
   sleep $S
   cd -
 fi
+if [[ $C == STKZ* ]]; then
+  ~/server-config/servers/update/geoserver/build.sh
+else
+  ~/geo/scripts/db/create.sh
+  ~/geo/scripts/data/rename.sh
+  ~/geo/scripts/db/restore.sh
+fi
 
 docker ps
-
-~/geo/scripts/db/create.sh
-~/geo/scripts/data/rename.sh
-~/geo/scripts/db/restore.sh
