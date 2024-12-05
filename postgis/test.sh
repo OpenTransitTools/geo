@@ -2,7 +2,7 @@ C=${1:-"N"}
 S=5
 if [[ $C == STK* ]]; then
   ~/server-config/docker/nuke.sh ALL
-  S=600
+  S=300
 fi
 if [[ $C == ST* ]]; then
   echo start postgis
