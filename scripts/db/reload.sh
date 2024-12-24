@@ -22,6 +22,10 @@ if [ -f $load_test ]; then
     cp -r $GTFS_DIR/data_dir $GS_DIR/
   fi
 
+  # restart db
+  $RLDIR/../restart.sh FALSE TRUE
+  sleep 100
+
   # load the db with new shp data
   $RLDIR/drop.sh
   sleep 1
@@ -39,4 +43,3 @@ if [ -f $load_test ]; then
 else
   echo "$GTFS_DIR/trimet.sql doen't exist ... won't reload db"
 fi
-
