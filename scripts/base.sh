@@ -10,8 +10,8 @@ fi
 
 GDIR=~/geo
 PG_DIR=$GDIR/postgis
-GEO_DIR=$GDIR/geoserver
-GEO_LOG=$GDIR/gs.log
+GS_DIR=$GDIR/geoserver
+GS_LOG=$GDIR/gs.log
 
 db_url=$1
 def_db=${2:-"postgres"}
@@ -21,6 +21,7 @@ psql=${psql:-"$docker_exe db psql"}
 psql_term=${psql:-"$docker_exe -it db psql"}
 pg_restore=${pg_restore:-"$docker_exe db psql"}
 pg_dump=${pg_dump:-"$docker_exe db pg_dump"}
+pg_shp=${pg_shp:-"$docker_exe db shp2pgsql"}
 
 
 # IMPORTANT: there are are python configs for user, pass and db in loader/config/app.ini, which also need to change
