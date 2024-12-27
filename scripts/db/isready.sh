@@ -1,8 +1,8 @@
 #
 # pg_isready - is db ready to talk?
 #
-DIR=`dirname $0`
-. $DIR/../base.sh
+IRDIR=`dirname $0`
+. $IRDIR/../base.sh
 
 cmd="$pg_isready"
 echo $cmd
