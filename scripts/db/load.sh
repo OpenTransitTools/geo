@@ -10,18 +10,20 @@ ln -s ~/rtp/loader/bin . > /dev/null 2>&1
 
 if [ -f ${GTFS_DIR}/TRIMET.gtfs.zip ]; then
   # remove old .sql files from gtfs dir
-  #rm -f ${GTFS_DIR}/*.sql
+  rm -f ${GTFS_DIR}/*.sql
 
   # grab any new .sql files that will get loaded
   $GDIR/scripts/data/shapes.sh
 
+  # create current schema
+  $GDIR/scripts/db/psql.sh "create schema current"
+
   # load any new .sql files
-  for x in ls ${GTFS_DIR}/*.sql
+  for x in ${GTFS_DIR}/*.sql
   do
-    echo load: $x
-    r="$GDIR/scripts/db/file.sh $x"
-    echo $r
-    eval $r
+    cmd="$GDIR/scripts/db/file.sh $x"
+    echo $cmd
+    eval $cmd
   done
 exit
   # load gtfs feeds into gtfsdb

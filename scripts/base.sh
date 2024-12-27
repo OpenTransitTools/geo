@@ -16,13 +16,6 @@ GS_LOG=$GDIR/gs.log
 db_url=$1  # *note* this is really strange to have cmd line options here
 def_db=${2:-"postgres"}
 
-docker_exe="docker exec -i -u $def_db"
-psql=${psql:-"$docker_exe db psql"}
-psql_term=${psql:-"$docker_exe -it db psql"}
-pg_restore=${pg_restore:-"$docker_exe db psql"}
-pg_dump=${pg_dump:-"$docker_exe db pg_dump"}
-pg_shp=${pg_shp:-"$docker_exe db shp2pgsql"}
-
 
 # IMPORTANT: there are are python configs for user, pass and db in loader/config/app.ini, which also need to change
 user=ott
@@ -30,6 +23,15 @@ pass=ott
 db=ott
 osm_db=osm
 otp_url=postgresql://$user:$pass@127.0.0.1:5432/$db
+
+
+docker_exe="docker exec -i -u $def_db"
+psql_term=${psql:-"$docker_exe -it db psql"}
+psql=${psql:-"$docker_exe -e PGUSER=$user -e PGPASSWORD=$pass db psql"}
+pg_isready=${pg_isready:-"$docker_exe db pg_isready"}
+pg_restore=${pg_restore:-"$docker_exe db psql"}
+pg_dump=${pg_dump:-"$docker_exe db pg_dump"}
+pg_shp=${pg_shp:-"$docker_exe db shp2pgsql"}
 
 
 # use URL if we get content on the cmd line (default to docker url when no ://)
