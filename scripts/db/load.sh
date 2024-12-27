@@ -1,13 +1,30 @@
 ##
-## crete OTT spatial db for OTT
+## load gtfsdb spatial db for OTT
+## *note*: requires the ott db to exist 
 ##
-DIR=`dirname $0`
-. $DIR/../base.sh
+LDDIR=`dirname $0`
+. $LDDIR/../base.sh
 
-# put loader's bin dir here
+# put loader project's bin dir here for gtfsdb creation from *gtfs.zip
 ln -s ~/rtp/loader/bin . > /dev/null 2>&1
 
 if [ -f ${GTFS_DIR}/TRIMET.gtfs.zip ]; then
+  # remove old .sql files from gtfs dir
+  #rm -f ${GTFS_DIR}/*.sql
+
+  # grab any new .sql files that will get loaded
+  $GDIR/scripts/data/shapes.sh
+
+  # load any new .sql files
+  for x in ls ${GTFS_DIR}/*.sql
+  do
+    echo load: $x
+    r="$GDIR/scripts/db/file.sh $x"
+    echo $r
+    eval $r
+  done
+exit
+  # load gtfs feeds into gtfsdb
   for f in ${GTFS_DIR}/*gtfs.zip
   do
     name=$(feed_name_from_zip $f)  

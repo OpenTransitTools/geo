@@ -16,7 +16,7 @@ if [ -f $load_test ]; then
   sleep 2
   cd -
 
-  # move clean data_dir into place
+  # move clean data_dir into geoserver/ instance
   if [ -d $GTFS_DIR/data_dir ]; then
     rm -rf $GS_DIR/data_dir
     cp -r $GTFS_DIR/data_dir $GS_DIR/
@@ -24,6 +24,7 @@ if [ -f $load_test ]; then
 
   # restart db
   $RLDIR/../restart.sh FALSE TRUE
+  echo sleeping for 100 till pg comes back up
   sleep 100
 
   # load the db with new shp data

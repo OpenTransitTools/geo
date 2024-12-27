@@ -13,7 +13,7 @@ PG_DIR=$GDIR/postgis
 GS_DIR=$GDIR/geoserver
 GS_LOG=$GDIR/gs.log
 
-db_url=$1
+db_url=$1  # *note* this is really strange to have cmd line options here
 def_db=${2:-"postgres"}
 
 docker_exe="docker exec -i -u $def_db"

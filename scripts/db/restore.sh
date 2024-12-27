@@ -1,5 +1,5 @@
-DIR=`dirname $0`
-. $DIR/../base.sh
+RESTDIR=`dirname $0`
+. $RESTDIR/../base.sh
 
 cd $GTFS_DIR
 echo "LOADING db with files in $PWD"
@@ -21,7 +21,7 @@ done
 for x in ls *.views
 do
   echo restore view: $x
-  r="$DIR/file.sh $x"
+  r="$RESTDIR/file.sh $x"
   echo $r
   eval $r
 
