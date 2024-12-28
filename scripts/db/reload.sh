@@ -24,8 +24,8 @@ if [ -f $load_test ]; then
 
   # restart db
   $RLDIR/../restart.sh FALSE TRUE
-  echo sleeping for 100 till pg comes back up
-  sleep 100
+  echo waiting till pg comes back up
+  $RLDIR/wait.sh
 
   # load the db with new shp data
   $RLDIR/drop.sh
@@ -34,7 +34,6 @@ if [ -f $load_test ]; then
   sleep 1
   $load_script
   sleep 2
-
 
   # bring geoserver back up
   cd $GS_DIR

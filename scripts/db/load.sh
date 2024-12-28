@@ -25,7 +25,7 @@ if [ -f ${GTFS_DIR}/TRIMET.gtfs.zip ]; then
     echo $cmd
     eval $cmd
   done
-exit
+
   # load gtfs feeds into gtfsdb
   for f in ${GTFS_DIR}/*gtfs.zip
   do
