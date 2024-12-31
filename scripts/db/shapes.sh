@@ -5,7 +5,7 @@ SHPS="rail.sql"
 
 
 function get_shps() {
-  for x in $SHPS
+  for f in $SHPS
   do
     cmd="curl http://maps6.trimet.org/data/$f > $GTFS_DIR/$f"
     echo $cmd
@@ -15,7 +15,7 @@ function get_shps() {
 
 
 function load_shps() {
-  for x in $SHPS
+  for f in $SHPS
   do
     cmd="$SHDIR/../db/file.sh $GTFS_DIR/$f"
     echo "shp load: $cmd"
