@@ -4,31 +4,26 @@ RESTDIR=`dirname $0`
 cd $GTFS_DIR
 echo "LOADING db with files in $PWD"
 
-for x in *.sql
-do
-  echo restore backup: $x
-  r="$pg_restore -d ${db_url}${db} < $x"
-  echo $r
-  eval $r
+function restore_file_types() {
+  ext=${1:-"sql"}
 
-  m="mv $x $x-processed"
-  echo $m
-  eval $m
+  for x in *.${ext}
+  do
+    echo restore backup: $x
+    r="$pg_restore -d ${db_url}${db} < $x"
+    echo $r
+    eval $r
 
-  echo
-done
+    m="mv $x $x-processed"
+    echo $m
+    eval $m
 
-for x in *.views
-do
-  echo restore view: $x
-  r="$RESTDIR/file.sh $x"
-  echo $r
-  eval $r
+    echo
+  done
+}
 
-  m="mv $x $x-processed"
-  echo $m
-  eval $m
+restore_file_types schema
+restore_file_types sql
+restore_file_types views
 
-  echo
-done
 cd -

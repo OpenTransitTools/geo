@@ -4,27 +4,30 @@
 ##
 LDDIR=`dirname $0`
 . $LDDIR/../base.sh
+. $LDDIR/shapes.sh
+
 
 # put loader project's bin dir here for gtfsdb creation from *gtfs.zip
 ln -s ~/rtp/loader/bin . > /dev/null 2>&1
 
 if [ -f ${GTFS_DIR}/TRIMET.gtfs.zip ]; then
   # remove old .sql files from gtfs dir
-  rm -f ${GTFS_DIR}/*.sql
+  rm -f ${GTFS_DIR}/*.sql ${GTFS_DIR}/*schema
 
-  # grab any new .sql files that will get loaded
-  $GDIR/scripts/data/shapes.sh
-
-  # create current schema
-  $GDIR/scripts/db/psql.sh "create schema current"
-
-  # load any new .sql files
-  for x in ${GTFS_DIR}/*.sql
+  # create schemas (in addition to gtfs agency schemas)
+  echo "create schema current;" > ${GTFS_DIR}/current.schema
+  for s in ${GTFS_DIR}/*schema
   do
-    cmd="$GDIR/scripts/db/file.sh $x"
-    echo $cmd
-    eval $cmd
+    echo "create schema(s): $s"
+    r="${LDDIR}/file.sh $s"
+    echo $r
+    eval $r
+    echo
   done
+
+  # grab and load the shape .sql files
+  get_shps
+  load_shps
 
   # load gtfs feeds into gtfsdb
   for f in ${GTFS_DIR}/*gtfs.zip
@@ -41,6 +44,17 @@ if [ -f ${GTFS_DIR}/TRIMET.gtfs.zip ]; then
     eval $dump
 
     echo;
+  done
+  echo;  echo;
+
+  # load any (materialized) views  
+  for v in ${GTFS_DIR}/*.views
+  do
+    echo "load view: $v"
+    r="$LDDIR/file.sh $v"
+    echo $r
+    eval $r
+    echo
   done
   echo;  echo;
 fi
