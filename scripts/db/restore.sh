@@ -1,8 +1,6 @@
 RESTDIR=`dirname $0`
 . $RESTDIR/../base.sh
 
-cd $GTFS_DIR
-echo "LOADING db with files in $PWD"
 
 function restore_file_types() {
   ext=${1:-"sql"}
@@ -22,8 +20,9 @@ function restore_file_types() {
   done
 }
 
+cd $GTFS_DIR
+echo "LOADING db with files in $PWD"
 restore_file_types schema
 restore_file_types sql
 restore_file_types views
-
 cd -

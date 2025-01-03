@@ -5,25 +5,19 @@
 LDDIR=`dirname $0`
 . $LDDIR/../base.sh
 . $LDDIR/shapes.sh
-
+. $LDDIR/schemas.sh
 
 # put loader project's bin dir here for gtfsdb creation from *gtfs.zip
 ln -s ~/rtp/loader/bin . > /dev/null 2>&1
 
-if [ -f ${GTFS_DIR}/TRIMET.gtfs.zip ]; then
+chk=${GTFS_DIR}/TRIMET.gtfs.zip
+if [ -f $chk ]; then
   # remove old .sql files from gtfs dir
   rm -f ${GTFS_DIR}/*.sql ${GTFS_DIR}/*schema
 
-  # create schemas (in addition to gtfs agency schemas)
-  echo "create schema current;" > ${GTFS_DIR}/current.schema
-  for s in ${GTFS_DIR}/*schema
-  do
-    echo "create schema(s): $s"
-    r="${LDDIR}/file.sh $s"
-    echo $r
-    eval $r
-    echo
-  done
+  # create "current" schema (in addition to gtfs agency schemas)
+  make_schema "current"
+  load_schemas
 
   # grab and load the shape .sql files
   get_shps
@@ -57,4 +51,6 @@ if [ -f ${GTFS_DIR}/TRIMET.gtfs.zip ]; then
     echo
   done
   echo;  echo;
+else
+  echo file $chk does not exist.
 fi

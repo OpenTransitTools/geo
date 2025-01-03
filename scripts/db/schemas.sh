@@ -1,15 +1,29 @@
 SCDIR=`dirname $0`
 . $SCDIR/../base.sh
 
-SCHEMAS=${1:-"current"}
-PERMS=${2:-"ALL"}
-USERS=${3:-"$user"}
 
-for s in $SCHEMAS
-do
-  echo "DROP SCHEMA IF EXISTS $s CASCADE;" > $GTFS_DIR/$s.schema
-  echo "CREATE SCHEMA $s;" >> $GTFS_DIR/$s.schema
-  p="ALTER DEFAULT PRIVILEGES IN SCHEMA $s GRANT $PERMS"
-  echo "$p ON TABLES TO $USERS;" >> $GTFS_DIR/$s.schema
-  echo "$p ON SEQUENCES TO $USERS;" >> $GTFS_DIR/$s.schema
-done
+# CREATE A <name>.schema file in the $GTFS_DIR, along with some other permission cmds
+function make_schema() {
+  schema=${1:-"current"}
+  perms=${2:-"ALL"}
+  users=${3:-"$user"}
+
+  echo "DROP SCHEMA IF EXISTS $schema CASCADE;" > $GTFS_DIR/${schema}.schema
+  echo "CREATE SCHEMA $schema;" >> $GTFS_DIR/${schema}.schema
+  p="ALTER DEFAULT PRIVILEGES IN SCHEMA $schema GRANT $perms"
+  echo "$p ON TABLES TO $USERS;" >> $GTFS_DIR/${schema}.schema
+  echo "$p ON SEQUENCES TO $USERS;" >> $GTFS_DIR/${schema}.schema
+}
+
+
+# LOAD all $GTFS_DIR/<name>.schema files into the db
+function load_schemas() {
+  for s in ${GTFS_DIR}/*schema
+  do
+    echo "load schema(s): $s"
+    r="${LDDIR}/file.sh $s"
+    echo $r
+    eval $r
+    echo
+  done
+}
