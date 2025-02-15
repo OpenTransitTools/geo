@@ -6,13 +6,14 @@ SCDIR=`dirname $0`
 function make_schema() {
   schema=${1:-"current"}
   perms=${2:-"ALL"}
-  users=${3:-"$user"}
+  users=${3:-"${user}"}
 
   echo "DROP SCHEMA IF EXISTS $schema CASCADE;" > $GTFS_DIR/${schema}.schema
   echo "CREATE SCHEMA $schema;" >> $GTFS_DIR/${schema}.schema
+  echo "GRANT USAGE ON SCHEMA $schema TO $users;" >> $GTFS_DIR/${schema}.schema
   p="ALTER DEFAULT PRIVILEGES IN SCHEMA $schema GRANT $perms"
-  echo "$p ON TABLES TO $USERS;" >> $GTFS_DIR/${schema}.schema
-  echo "$p ON SEQUENCES TO $USERS;" >> $GTFS_DIR/${schema}.schema
+  echo "$p ON TABLES TO $users;" >> $GTFS_DIR/${schema}.schema
+  echo "$p ON SEQUENCES TO $users;" >> $GTFS_DIR/${schema}.schema
 }
 
 

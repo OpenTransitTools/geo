@@ -22,7 +22,7 @@ if [ $DO_DB == "TRUE" ]; then
   cd $PG_DIR
   echo $PWD
   docker-compose down; sleep 5
-  docker network prune -f; sleep 2
+  docker system prune -a -f; sleep 2
   rm -f $GS_LOG
   tmux new-session -d -s postgres_ses "docker-compose up > $GS_LOG 2>&1"
   sleep 2
