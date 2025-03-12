@@ -6,6 +6,7 @@ REDIR=`dirname $0`
 
 DO_GEO=${1:-"TRUE"}
 DO_DB=${2:-"TRUE"}
+DOC_PRUNE=${3:-"FALSE"}
 
 date
 
@@ -22,9 +23,13 @@ if [ $DO_DB == "TRUE" ]; then
   cd $PG_DIR
   echo $PWD
   docker-compose down; sleep 5
-  docker system prune -a -f; sleep 2
+
+  if [ $DOC_PRUNE == "TRUE" ]; then
+    docker system prune -a -f; sleep 2
+  fi
+
   rm -f $GS_LOG
-  tmux new-session -d -s postgres_ses "docker-compose up > $GS_LOG 2>&1"
+  docker-compose up -d > $GS_LOG 2>&1
   sleep 2
   cd -
 fi
@@ -33,7 +38,7 @@ fi
 if [ $DO_GEO == "TRUE" ]; then
   cd $GS_DIR
   echo $PWD
-  tmux new-session -d -s geoserver_ses "docker-compose up > $GS_LOG 2>&1"
+  docker-compose up -d > $GS_LOG 2>&1
   sleep 2
   cd -
 fi
