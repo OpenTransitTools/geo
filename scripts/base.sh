@@ -22,7 +22,7 @@ user=ott
 pass=ott
 db=ott
 osm_db=osm
-otp_url=postgresql://$user:$pass@127.0.0.1:5432/$db
+ott_url=postgresql://$user:$pass@127.0.0.1:5432/$db
 
 
 docker_exe="docker exec -i -u $def_db"

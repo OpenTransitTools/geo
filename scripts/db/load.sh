@@ -7,10 +7,9 @@ LDDIR=`dirname $0`
 . $LDDIR/shapes.sh
 . $LDDIR/schemas.sh
 
-# put loader project's bin dir here for gtfsdb creation from *gtfs.zip
-ln -s ~/rtp/loader/bin . > /dev/null 2>&1
+required_feed=${1:-TRIMET}
 
-chk=${GTFS_DIR}/TRIMET.gtfs.zip
+chk=${GTFS_DIR}/${required_feed}.gtfs.zip
 if [ -f $chk ]; then
   # remove old .sql files from gtfs dir
   rm -f ${GTFS_DIR}/*.sql ${GTFS_DIR}/*schema
@@ -23,23 +22,34 @@ if [ -f $chk ]; then
   get_shps
   load_shps
 
+  cd ~/gtfsdb_ext;
+
   # load gtfs feeds into gtfsdb
   for f in ${GTFS_DIR}/*gtfs.zip
   do
-    name=$(feed_name_from_zip $f)  
+    name=$(feed_name_from_zip $f)
 
-    cmd="bin/gtfsdb-load -c -ct -g -d $otp_url -s ${name} ${f}"
+    cmd="poetry run gtfsdb-load -c -ct -g -d $ott_url -s ${name} ${f}"
     echo $cmd
     eval $cmd
     sleep 1
+  done
 
+  cmd="poetry run update-shared-stops -s ${required_feed} -d $ott_url ott/gtfsdb/ext/shared_stops/data/shared_stops.csv"
+  echo $cmd
+  eval $cmd
+  cd -
+  echo; echo;
+
+  # load gtfs feeds into gtfsdb
+  for f in ${GTFS_DIR}/*gtfs.zip
+  do
+    name=$(feed_name_from_zip $f)
     dump="$pg_dump $db -n ${name} > ${GTFS_DIR}/${name}.sql"
     echo $dump
     eval $dump
-
-    echo;
   done
-  echo;  echo;
+  echo; echo;
 
   # load any (materialized) views  
   for v in ${GTFS_DIR}/*.views

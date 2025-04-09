@@ -14,7 +14,7 @@ for f in ${GTFS_DIR}/*gtfs.zip
 do
   name=$(feed_name_from_zip $f)  
 
-  cmd="$gtfs_load -c -ct -g -d $otp_url -s ${name} ${f}"
+  cmd="$gtfs_load -c -ct -g -d $ott_url -s ${name} ${f}"
   echo $cmd
   #eval $cmd
 done
