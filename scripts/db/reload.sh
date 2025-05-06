@@ -41,5 +41,5 @@ if [ -f $load_test ]; then
   tmux new-session -d -s geoserver_ses "docker-compose up > $GS_LOG 2>&1"
   cd -
 else
-  echo "$GTFS_DIR/trimet.sql doen't exist ... won't reload db"
+  echo "required file \"$load_test\" doen't exist, so won't try reloading the db"
 fi

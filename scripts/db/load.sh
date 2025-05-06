@@ -11,6 +11,8 @@ required_feed=${1:-TRIMET}
 
 chk=${GTFS_DIR}/${required_feed}.gtfs.zip
 if [ -f $chk ]; then
+  echo "INFO: starting the load as file $chk *does* exist."
+
   # remove old .sql files from gtfs dir
   rm -f ${GTFS_DIR}/*.sql ${GTFS_DIR}/*schema
 
@@ -62,5 +64,5 @@ if [ -f $chk ]; then
   done
   echo;  echo;
 else
-  echo file $chk does not exist.
+  echo "WARN: not loading as file $chk *does not* exist."
 fi
