@@ -46,6 +46,7 @@ function feed_name_from_zip() {
   # ala '../FEED_NAME.gtfs.zip' -> 'feed_name' 
   name=${1#$GTFS_DIR/}
   name=${name%.gtfs.zip}
+  name=${name%.sql*}
   name=$(echo "$name" | awk '{print tolower($1)}')
   echo $name
 }

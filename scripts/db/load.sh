@@ -6,15 +6,17 @@ LDDIR=`dirname $0`
 . $LDDIR/../base.sh
 
 
+# poetry install
 gtfs_load="poetry run gtfsdb-load"
+install_load=`which gtfsdb-load`
+if [ $install_load ]; then
+  echo "Will use the installed '$install_load' rather than running via poetry."
+  gtfs_load=$install_load
+fi
+
+# loader install (prefer that over poetry)
 if [ -f "bin/gtfsdb-load" ]; then
   gtfs_load="bin/gtfsdb-load"
-else
-  install_load=`which gtfsdb-load`
-  if [ $install_load ]; then
-    echo Will use the installed '$install_load' rather than running via poetry.
-    gtfs_load=$install_load
-  fi
 fi
 
 for f in ${GTFS_DIR}/*gtfs.zip
