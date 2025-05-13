@@ -11,8 +11,6 @@ if [ -f $load_test ]; then
   # take geoserver down
   cd $GS_DIR
   docker-compose down
-  sleep 1
-  pkill -9 tmux
   sleep 2
   cd -
 
@@ -38,7 +36,7 @@ if [ -f $load_test ]; then
   # bring geoserver back up
   cd $GS_DIR
   rm -f $GS_LOG
-  tmux new-session -d -s geoserver_ses "docker-compose up > $GS_LOG 2>&1"
+  docker-compose up -d > $GS_LOG 2>&1
   cd -
 else
   echo "required file \"$load_test\" doen't exist, so won't try reloading the db"

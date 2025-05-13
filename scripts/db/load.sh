@@ -4,65 +4,32 @@
 ##
 LDDIR=`dirname $0`
 . $LDDIR/../base.sh
-. $LDDIR/shapes.sh
-. $LDDIR/schemas.sh
 
-required_feed=${1:-TRIMET}
 
-chk=${GTFS_DIR}/${required_feed}.gtfs.zip
-if [ -f $chk ]; then
-  echo "INFO: starting the load as file $chk *does* exist."
-
-  # remove old .sql files from gtfs dir
-  rm -f ${GTFS_DIR}/*.sql ${GTFS_DIR}/*schema
-
-  # create "current" schema (in addition to gtfs agency schemas)
-  make_schema "current"
-  load_schemas
-
-  # grab and load the shape .sql files
-  get_shps
-  load_shps
-
-  cd ~/gtfsdb_ext;
-
-  # load gtfs feeds into gtfsdb
-  for f in ${GTFS_DIR}/*gtfs.zip
-  do
-    name=$(feed_name_from_zip $f)
-
-    cmd="poetry run gtfsdb-load -c -ct -g -d $ott_url -s ${name} ${f}"
-    echo $cmd
-    eval $cmd
-    sleep 1
-  done
-
-  cmd="poetry run update-shared-stops -s ${required_feed} -d $ott_url ott/gtfsdb/ext/shared_stops/data/shared_stops.csv"
-  echo $cmd
-  eval $cmd
-  cd -
-  echo; echo;
-
-  # load gtfs feeds into gtfsdb
-  for f in ${GTFS_DIR}/*gtfs.zip
-  do
-    name=$(feed_name_from_zip $f)
-    dump="$pg_dump $db -n ${name} > ${GTFS_DIR}/${name}.sql"
-    echo $dump
-    eval $dump
-  done
-  echo; echo;
-
-  # load any (materialized) views  
-  for v in ${GTFS_DIR}/*.views
-  do
-    echo "load view: $v"
-    r="$LDDIR/file.sh $v"
-    echo $r
-    eval $r
-    echo
-  done
-  echo;  echo;
+gtfs_load="poetry run gtfsdb-load"
+if [ -f "bin/gtfsdb-load" ]; then
+  gtfs_load="bin/gtfsdb-load"
 else
-  echo "WARN: not loading as file $chk *does not* exist."
+  install_load=`which gtfsdb-load`
+  if [ $install_load ]; then
+    echo Will use the installed '$install_load' rather than running via poetry.
+    gtfs_load=$install_load
+  fi
 fi
+
+for f in ${GTFS_DIR}/*gtfs.zip
+do
+  name=$(feed_name_from_zip $f)
+  if [ ${2:-""} == "f" ]; then
+    if [ ${name} == "trimet" ] || [ ${name} == "ctran" ]; then
+      continue;
+    fi
+  fi
+
+  cmd="$gtfs_load -c -ct -g -d $ott_url -s ${name} ${f}"
+  echo $cmd
+  if [ ${1:-""} == "load" ]; then
+    echo loading...
+    eval $cmd
+  fi
+done
