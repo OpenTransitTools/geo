@@ -29,7 +29,7 @@ if [ $DO_DB == "TRUE" ]; then
   fi
 
   rm -f $GS_LOG
-  docker-compose up -d > $GS_LOG 2>&1
+  docker-compose up -d >> $GS_LOG 2>&1
   sleep 2
   cd -
 fi
@@ -38,7 +38,7 @@ fi
 if [ $DO_GEO == "TRUE" ]; then
   cd $GS_DIR
   echo $PWD
-  docker-compose up -d > $GS_LOG 2>&1
+  docker-compose up -d >> $GS_LOG 2>&1
   sleep 2
   cd -
 fi

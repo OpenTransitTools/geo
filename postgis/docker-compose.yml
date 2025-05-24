@@ -6,16 +6,19 @@ volumes:
 services:
   db:
     image: kartoza/postgis:${POSTGRES_MAJOR_VERSION}-${POSTGIS_MAJOR_VERSION}.${POSTGIS_MINOR_RELEASE}
-    hostname: db
     container_name: db
+    hostname: db
     volumes:
-      - geo-db-data:/var/lib/postgresql
+      - ${PWD}/geo-db-data:/var/lib/postgresql
     ports:
       - ${POSTGRES_PORT}:5432
     environment:
+      - RUN_AS_ROOT=${RUN_AS_ROOT}
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASS=${POSTGRES_PASS}
+      - POSTGRES_UID=${POSTGRES_UID}
+      - POSTGRES_GID=${POSTGRES_GID}
       - POSTGRES_MULTIPLE_EXTENSIONS=postgis,hstore,postgis_topology,postgis_raster
       - ALLOW_IP_RANGE=all
       - FORCE_SSL=FALSE

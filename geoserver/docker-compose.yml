@@ -3,6 +3,7 @@ version: '3.8'
 services:
   geoserver:
     image: kartoza/geoserver:${GS_VERSION}
+    container_name: geoserver
     volumes:
       - ${PWD}/data_dir:/opt/geoserver/data_dir
     ports:
