@@ -13,21 +13,20 @@ PG_DIR=$GDIR/postgis
 GS_DIR=$GDIR/geoserver
 GS_LOG=$GDIR/gs.log
 
-db_url=$1  # *note* this is really strange to have cmd line options here
-def_db=${2:-"postgres"}
-
-
 # IMPORTANT: there are are python configs for user, pass and db in loader/config/app.ini, which also need to change
-user=ott
-pass=ott
-db=ott
-osm_db=osm
-ott_url=postgresql://$user:$pass@127.0.0.1:5432/$db
+user=${pg_user:-"ott"}
+pass=${pg_pass:-"ott"}
+port=${pg_port:-"5432"}
+server=${server:-"127.0.0.1"}
 
-gs_user="admin"
-gs_password="geoserver"
+db=${pg_db:-"ott"}
+def_db=${def_db:-"postgres"}
 
-docker_exe="docker exec -i -u $def_db"
+ott_url=postgresql://$user:$pass@$server:$port/$db
+def_url=postgresql://$user:$pass@$server:$port/$def_db
+
+# docker'ized psql cmds
+docker_exe="docker exec -i -u $def_user"
 psql_term=${psql:-"$docker_exe -it db psql"}
 psql_ott=${psql:-"$docker_exe -e PGUSER=$user -e PGPASSWORD=$pass db psql"}
 psql=${psql:-"$docker_exe db psql"}
@@ -37,10 +36,8 @@ pg_dump=${pg_dump:-"$docker_exe db pg_dump"}
 pg_shp=${pg_shp:-"$docker_exe db shp2pgsql"}
 
 
-# use URL if we get content on the cmd line (default to docker url when no ://)
-if  [[ "$db_url" != "" ]] && [[ "$db_url" != *"://"* ]]; then
-    db_url=postgres://docker:docker@localhost:5432/
-fi
+gs_user=${gs_user:-"admin"}
+gs_password=${gs_pass:-"geoserver"}
 
 
 function feed_name_from_zip() {
