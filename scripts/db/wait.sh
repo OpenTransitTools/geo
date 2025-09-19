@@ -14,6 +14,7 @@ do
   $WDIR/isready.sh > /dev/null 2> /dev/null
   s=$?
   if [ $s -lt 1 ]; then
+    sleep 2
     break
   fi
 
