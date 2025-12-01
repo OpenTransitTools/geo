@@ -14,7 +14,7 @@ date
 if [ $DO_GEO == "TRUE" ]; then
   cd $GS_DIR
   echo $PWD
-  docker-compose down -v; sleep 2
+  docker compose down -v; sleep 2
   cd -
 fi
 
@@ -22,14 +22,14 @@ fi
 if [ $DO_DB == "TRUE" ]; then
   cd $PG_DIR
   echo $PWD
-  docker-compose down; sleep 5
+  docker compose down; sleep 15
 
   if [ $DOC_PRUNE == "TRUE" ]; then
     docker system prune -a -f; sleep 2
   fi
 
   rm -f $GS_LOG
-  docker-compose up -d >> $GS_LOG 2>&1
+  docker compose up -d >> $GS_LOG 2>&1
   sleep 2
   cd -
 fi
@@ -38,7 +38,7 @@ fi
 if [ $DO_GEO == "TRUE" ]; then
   cd $GS_DIR
   echo $PWD
-  docker-compose up -d >> $GS_LOG 2>&1
+  docker compose up -d >> $GS_LOG 2>&1
   sleep 2
   cd -
 fi

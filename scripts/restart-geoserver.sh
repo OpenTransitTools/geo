@@ -10,7 +10,7 @@ date
 # shutdown geoserver
 cd $GS_DIR
 echo $PWD
-docker-compose down -v
+docker compose down -v
 sleep 2
 
 if [ $DO_PRUNE == "TRUE" ]; then
@@ -18,5 +18,5 @@ docker system prune -a -f
 fi
 
 # startup geoserver
-docker-compose up -d > $GS_LOG 2>&1
+docker compose up -d > $GS_LOG 2>&1
 cd -

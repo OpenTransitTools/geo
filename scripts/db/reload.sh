@@ -10,7 +10,7 @@ load_test=${2:-"$GTFS_DIR/trimet.sql"}
 if [ -f $load_test ]; then
   # take geoserver down
   cd $GS_DIR
-  docker-compose down
+  docker compose down
   sleep 2
   cd -
 
@@ -36,7 +36,7 @@ if [ -f $load_test ]; then
   # bring geoserver back up
   cd $GS_DIR
   rm -f $GS_LOG
-  docker-compose up -d > $GS_LOG 2>&1
+  docker compose up -d > $GS_LOG 2>&1
   cd -
 else
   echo "required file \"$load_test\" doen't exist, so won't try reloading the db"
