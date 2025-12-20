@@ -1,5 +1,5 @@
 GEODIR=`dirname $0`
-. $GEODIR/../base.sh
+. $GEODIR/base.sh
 
 LAYERS=${1:-"ott:current ott:current_flex ott:current_routes ott:current_stops"}
 SERVERS=${2:-"http://localhost:8600"}
