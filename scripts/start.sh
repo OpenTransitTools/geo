@@ -8,13 +8,13 @@ DO_PRUNE=${1:-"FALSE"}
 date
 
 # shutdown geoserver
-cd $GS_DIR
+cd $REDIR/../
 echo $PWD
 docker compose down -v
 sleep 2
 
 if [ $DO_PRUNE == "TRUE" ]; then
-docker system prune -a -f
+  docker system prune -a -f
 fi
 
 # startup geoserver
