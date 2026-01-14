@@ -6,7 +6,6 @@ services:
       - ${PWD}/data_dir:/opt/geoserver/data_dir
     ports:
       - "${GEOSERVER_PORT}:8080"
-    restart: on-failure
     environment:
       - EXISTING_DATA_DIR=${EXISTING_DATA_DIR}
       - GEOSERVER_DATA_DIR=${GEOSERVER_DATA_DIR}
@@ -22,6 +21,11 @@ services:
       - GEOSERVER_CONTEXT_ROOT=${GEOSERVER_CONTEXT_ROOT}
       - ROOT_WEBAPP_REDIRECT=true
       - CONSOLE_HANDLER_LEVEL=${CONSOLE_HANDLER_LEVEL}
+    logging:
+      options:
+        max-size: "120m"
+        max-file: "8"
+    restart: on-failure
     healthcheck:
       test: [ "CMD-SHELL", "curl --fail --silent --write-out 'HTTP CODE : %{http_code}\n' --output /dev/null -u $${GEOSERVER_ADMIN_USER}:$${GEOSERVER_ADMIN_PASSWORD} http://localhost:8080/geoserver/rest/about/version.xml" ]
       interval: 1m30s
