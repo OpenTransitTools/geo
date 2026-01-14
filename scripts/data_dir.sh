@@ -2,7 +2,7 @@
 # clone subdirs from a tree
 # https://stackoverflow.com/questions/600079/how-do-i-clone-a-subdirectory-only-of-a-git-repository/52269934#52269934
 #
-BRANCH="${1:-DEC_2025}"
+BRANCH="${1:-JAN_2026}"
 DIRS="${2:-data_dir}"
 NAME="geoserver_data_dir"
 URL="https://github.com/OpenTransitTools/${NAME}.git"
