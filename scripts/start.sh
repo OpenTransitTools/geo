@@ -4,7 +4,7 @@
 REDIR=`dirname $0`
 . $REDIR/base.sh
 
-DO_PRUNE=${1:-"FALSE"}
+DOC_PRUNE=${1:-"TRUE"}
 date
 
 # shutdown geoserver
@@ -13,8 +13,11 @@ echo $PWD
 docker compose down -v
 sleep 2
 
-if [ $DO_PRUNE == "TRUE" ]; then
-  docker system prune -a -f
+if [ $DOC_PRUNE == "TRUE" ]; then
+  cmd="docker system prune -a -f"
+  echo $cmd
+  eval $cmd
+  sleep 2
 fi
 
 # startup geoserver
