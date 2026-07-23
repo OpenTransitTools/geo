@@ -24,8 +24,8 @@ db=ott
 osm_db=osm
 ott_url=postgresql://$user:$pass@127.0.0.1:5432/$db
 
-gs_user="admin"
-gs_password="geoserver"
+gs_user=${GEOSERVER_ADMIN_USER:-"admin"}
+gs_password=${GEOSERVER_ADMIN_PASSWORD:-"geoserver"}
 
 docker_exe="docker exec -i -u $def_db"
 psql_term=${psql:-"$docker_exe -it db psql"}
