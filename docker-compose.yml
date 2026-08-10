@@ -1,9 +1,11 @@
+# https://github.com/kartoza/docker-geoserver/blob/develop/compose
 services:
   geoserver:
     image: kartoza/geoserver:${GS_VERSION}
     container_name: geoserver
     volumes:
       - ${PWD}/data_dir:/opt/geoserver/data_dir
+      - ${HOME}/ortho:${HOME}/ortho
     ports:
       - "${GEOSERVER_PORT}:8080"
     environment:
